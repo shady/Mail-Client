@@ -5,34 +5,25 @@
 package mbbmailclient;
 
 import java.awt.Color;
-import java.awt.event.AdjustmentEvent;
-import java.awt.event.AdjustmentListener;
-import java.io.IOException;
 import java.util.Observable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.text.BadLocationException;
-import org.jdesktop.application.Action;
-import org.jdesktop.application.SingleFrameApplication;
-import org.jdesktop.application.FrameView;
 import java.util.Observer;
 import javax.swing.JDialog;
-import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
-import javax.swing.text.html.HTMLEditorKit;
 
 /**
  * The application's main frame.
  */
-public class MBBMailClientView extends FrameView implements Observer {
+public class MBBMailClientView extends JFrame implements Observer {
     private Model model;
     private Settings settingsbox;
 
-    public MBBMailClientView(SingleFrameApplication app, Model model) {
-        super(app);
+    public MBBMailClientView(Model model) {
         this.model = model;
 
         model.addObserver(this);
@@ -40,7 +31,6 @@ public class MBBMailClientView extends FrameView implements Observer {
         updateView();
     }
 
-    @Action
     public void showAboutBox() {
         if (aboutBox == null) {
             JFrame mainFrame = MBBMailClientApp.getApplication().getMainFrame();
@@ -50,11 +40,10 @@ public class MBBMailClientView extends FrameView implements Observer {
         MBBMailClientApp.getApplication().show(aboutBox);
     }
 
-    @Action
     public void showSetings() {
         if (settingsbox == null) {
             settingsbox = new Settings(this);
-            settingsbox.setLocationRelativeTo(this.getFrame());
+            settingsbox.setLocationRelativeTo(this.getContentPane());
         }
         MBBMailClientApp.getApplication().show(settingsbox);
     }
